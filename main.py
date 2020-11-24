@@ -1,12 +1,17 @@
-from telegram.ext import Updater
-from config.config import TOKEN
-from handlers import (message_handler)
+from telegram.ext import Updater, PicklePersistence
+from config import TOKEN
+from handlers import *
 
 
 def main():
-    updater = Updater(TOKEN)
+    my_persistence = PicklePersistence('my_pickle', store_chat_data=False, single_file=False)
 
-    updater.dispatcher.add_handler(message_handler)
+    updater = Updater(TOKEN, persistence=my_persistence)
+
+    # updater.dispatcher.add_handler(message_handler)
+    updater.dispatcher.add_handler(conversation_handler)
+    updater.dispatcher.add_handler(start_handler)
+    updater.dispatcher.add_handler(inline_keyboards_handler)
 
     # updater.start_polling()
     # updater.idle()
