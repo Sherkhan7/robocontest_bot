@@ -68,9 +68,8 @@ def program_lang_callback(updata: Update, context: CallbackContext):
 
 
 def code_callback(updata: Update, context: CallbackContext):
-    with open('jsons/update.json', 'w') as update_file:
-        update_file.write(updata.to_json())
-
+    # with open('jsons/update.json', 'w') as update_file:
+    #     update_file.write(updata.to_json())
     user_data = context.user_data
     user = user_data['user_data']
 
@@ -107,12 +106,7 @@ def input_callback(updata: Update, context: CallbackContext):
         code_text = 'Код'
 
     code = user_data["user_input_data"]["code"]
-    code = code.replace('&', '&amp;')
-    code = code.replace('<', '&lt;')
-    code = code.replace('>', '&gt;')
-
-    print('code:', code)
-    print('input_code:', user_data["user_input_data"]["code"])
+    code = code.replace('&', '&amp;').code.replace('<', '&lt;').code.replace('>', '&gt;')
 
     text = f'{code_text}:\n{code}\n\n' \
            f'{input_text}:\n{user_data["user_input_data"]["input"]}'
