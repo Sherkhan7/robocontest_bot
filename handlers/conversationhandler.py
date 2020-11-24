@@ -103,10 +103,13 @@ def input_callback(updata: Update, context: CallbackContext):
         input_text = "Киривчи маълумотлар (input)"
         code_text = 'Код'
 
-    text = f'{code_text} :\n{user_data["user_input_data"]["code"]}\n\n' \
+    code = user_data["user_input_data"]["code"]
+    code = code.replace('<', '&lt;').replace('>', '&gt;').replace('&', '&amp;')
+
+    text = f'{code_text} :\n{code}\n\n' \
            f'{input_text} :\n{user_data["user_input_data"]["input"]}'
 
-    text = f'<pre>{text}</pre>'
+    text = f'<code>{text}</code>'
     message = updata.message.reply_text(text, reply_markup=inline_keyboard, parse_mode=ParseMode.HTML)
 
     state = CONFIRMATION
