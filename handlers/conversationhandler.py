@@ -107,9 +107,9 @@ def input_callback(updata: Update, context: CallbackContext):
         code_text = 'Код'
 
     code = user_data["user_input_data"]["code"]
+    code = code.replace('&', '&amp;')
     code = code.replace('<', '&lt;')
     code = code.replace('>', '&gt;')
-    code = code.replace('&', '&amp;')
 
     print('code:', code)
     print('input_code:', user_data["user_input_data"]["code"])
