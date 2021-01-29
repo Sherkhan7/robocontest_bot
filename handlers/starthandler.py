@@ -16,10 +16,10 @@ def start_handler_callback(update: Update, context: CallbackContext):
 
             if user['lang'] == LANGS[0]:
                 text = "Robocontest.uz saytining kompilyator botiga xush kelibsiz !\n" \
-                       "Dasturlash tillarini ko'rish uchun /menu ni bosing"
+                       "Dasturlash tillarini ko'rish uchun /languages ni bosing"
             else:
                 text = 'Robocontest.uz сайтининг компилятор ботига хуш келибсиз !\n' \
-                       'Дастурлаш тилларини кўриш учун /menu ни босинг'
+                       'Дастурлаш тилларини кўриш учун /languages ни босинг'
 
             text = f'\U0001F917    {text}'
             update.message.reply_text(text)
