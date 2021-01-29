@@ -1,6 +1,7 @@
 from telegram.ext import ConversationHandler, CallbackQueryHandler, CallbackContext, CommandHandler, MessageHandler, \
     Filters
 from telegram import Update, ParseMode
+
 from helpers import set_user_data
 from inlinekeyboards import InlineKeyboard
 from languages import LANGS
@@ -167,13 +168,13 @@ def send_request_to_api(attempt_data):
         'input': attempt_data['input'],
         'callback_url': 'https://cardel.ml/api'
     }
-    r = requests.post(url_2, headers=headers, data=params)
-    r = r.json()
+    server_response = requests.post(url_2, headers=headers, data=params)
+    server_response = server_response.json()
 
-    print(r)
+    print(server_response)
 
-    if 'id' in r:
-        attempt_data['attempt_id'] = r['id']
+    if 'id' in server_response:
+        attempt_data['attempt_id'] = server_response['id']
         attempt_data['status'] = 'waiting'
 
         value = insert_attempt(attempt_data)
@@ -206,16 +207,23 @@ def cancel_callback(updata: Update, context: CallbackContext):
 
 
 conversation_handler = ConversationHandler(
-    entry_points=[CommandHandler('menu', command_callback)],
+    entry_points=[CommandHandler('languages', command_callback)],
+
     states={
+
         CHOOSE_PROGRAM_LANG: [
             CallbackQueryHandler(program_lang_callback,
                                  pattern='^(python2|python3|java|js|pascal|cpp|csharp|php|go|kotlin|PascalABC.NET|)$')],
+
         CODE: [MessageHandler(Filters.text & (~ Filters.command), code_callback)],
+
         INPUT: [MessageHandler(Filters.text & (~ Filters.command), input_callback)],
+
         CONFIRMATION: [CallbackQueryHandler(confirm_callback, pattern='^confirm$')]
     },
     fallbacks=[CommandHandler('cancel', cancel_callback)],
+
     persistent=True,
+
     name='code_conversation'
 )

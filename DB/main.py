@@ -1,9 +1,6 @@
 import pymysql.cursors
 from contextlib import closing
-import json
-import datetime
 from config import DB_CONFIG
-from pprint import pprint
 
 
 def get_connection():
