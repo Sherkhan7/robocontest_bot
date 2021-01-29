@@ -4,4 +4,4 @@ config/
 *.json
 test.py
 jsons/
-my_pickle_*.py
+my_pickle_*
